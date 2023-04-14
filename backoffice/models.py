@@ -1,8 +1,6 @@
 from django.db import models
 
-
 # Create your models here.
-
 
 class Editeur(models.Model):
     nom = models.CharField(max_length=250)
@@ -19,8 +17,8 @@ class Livre(models.Model):
     description = models.TextField(max_length=250)
     isbn = models.CharField(max_length=250)
     archive = models.BooleanField
-    editeur = models.ForeignKey(Editeur, on_delete=models.CASCADE)
-    auteur = models.ForeignKey(Auteur, on_delete=models.CASCADE)
+    editeur = models.ForeignKey(Editeur, on_delete=models.CASCADE, default=None)
+    auteur = models.ForeignKey(Auteur, on_delete=models.CASCADE, default=None)
     genres = models.ManyToManyField(Genre)
 
 class Stock(models.Model):
@@ -30,9 +28,9 @@ class Usure(models.Model):
     nom = models.CharField(max_length=250)
 
 class Exemplaire(models.Model):
-    book = models.ForeignKey(Livre, on_delete=models.CASCADE)
-    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
-    usure = models.ForeignKey(Usure, on_delete=models.CASCADE)
+    livre = models.ForeignKey(Livre, on_delete=models.CASCADE, default=None)
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE, default=None)
+    usure = models.ForeignKey(Usure, on_delete=models.CASCADE, default=None)
 
 class Adherent(models.Model):
     nom = models.CharField(max_length=250)
@@ -41,9 +39,9 @@ class Adherent(models.Model):
     email = models.EmailField
     caution = models.BooleanField
 
-class emprunt(models.Model):
-    adherent = models.ForeignKey(Adherent, on_delete=models.CASCADE)
-    exemplaire = models.ForeignKey(Exemplaire, on_delete=models.CASCADE)
+class Emprunt(models.Model):
+    adherent = models.ForeignKey(Adherent, on_delete=models.CASCADE, default=None)
+    exemplaire = models.ForeignKey(Exemplaire, on_delete=models.CASCADE, default=None)
     date_emprunt = models.DateField
     date_retour = models.DateField
     status = models.CharField(max_length=250)
